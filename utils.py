@@ -68,6 +68,123 @@ def apply_style() -> None:
             color: #881337;
             margin-bottom: 0.8rem;
         }
+
+        .dispatch-subtitle {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin: 0.25rem 0 0.8rem 0.3rem;
+        }
+        .dispatch-alert-card {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            background:#fff;
+            border:2px solid #f05252;
+            border-radius:18px;
+            padding:1rem 1.2rem;
+            min-height:88px;
+            box-shadow:0 8px 18px rgba(15, 23, 42, 0.05);
+            margin-bottom:1rem;
+        }
+        .dispatch-alert-left {
+            display:flex;
+            align-items:center;
+            gap:1rem;
+        }
+        .dispatch-alert-num {
+            width:54px;
+            height:54px;
+            border-radius:14px;
+            background:#fff1f2;
+            color:#ef4444;
+            font-size:1.5rem;
+            font-weight:800;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+        .dispatch-alert-team {
+            color:#111827;
+            font-size:1.5rem;
+            font-weight:800;
+        }
+        .dispatch-alert-action {
+            background:#ef4444;
+            color:white;
+            border-radius:12px;
+            padding:0.6rem 1rem;
+            font-weight:700;
+            font-size:0.9rem;
+        }
+        .dispatch-board {
+            margin-top:0.8rem;
+            margin-bottom:1rem;
+            border-radius:18px;
+            overflow:hidden;
+            background:#fff;
+            border:1px solid #e5e7eb;
+            box-shadow:0 10px 22px rgba(15, 23, 42, 0.05);
+        }
+        .dispatch-board-header {
+            background:#1f2d44;
+            color:white;
+            padding:0.95rem 1.15rem;
+            font-weight:700;
+        }
+        .dispatch-main-panel {
+            margin:1rem;
+            min-height:250px;
+            border:2px dashed #e5e7eb;
+            border-radius:26px;
+            background:#fafafa;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:1.1rem;
+        }
+        .dispatch-main-icon {
+            width:72px;
+            height:72px;
+            border-radius:50%;
+            background:#fff1f2;
+            color:#ef4444;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:3rem;
+            line-height:1;
+        }
+        .dispatch-main-title {
+            font-size:2.2rem;
+            font-weight:900;
+            color:#1f2d44;
+            letter-spacing:0.02em;
+        }
+        .dispatch-main-sub {
+            color:#cbd5e1;
+            font-size:1rem;
+            letter-spacing:0.08em;
+            font-weight:700;
+        }
+        .status-head {
+            font-weight:700;
+            margin:0.8rem 0;
+            font-size:0.98rem;
+        }
+        .status-yellow { color:#ca8a04; }
+        .status-green { color:#16a34a; }
+        .status-blue { color:#60a5fa; }
+        .status-box {
+            background:#fff;
+            border:1px solid #edf2f7;
+            border-radius:18px;
+            min-height:120px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#cbd5e1;
+            box-shadow:0 4px 14px rgba(15, 23, 42, 0.04);
+        }
         .tf-badge {
             display:inline-block;
             padding:0.3rem 0.65rem;
@@ -90,25 +207,25 @@ def apply_style() -> None:
         section[data-testid="stSidebar"] * {
             color: white !important;
         }
-
-        /* Sidebar 登入輸入框：白底黑字 */
-        section[data-testid="stSidebar"] div[data-baseweb="input"] {
-            background: #ffffff !important;
-            border-radius: 10px !important;
-            border: 1px solid #cbd5e1 !important;
-        }
-        section[data-testid="stSidebar"] div[data-baseweb="input"] input {
+        section[data-testid="stSidebar"] input {
             background: #ffffff !important;
             color: #111827 !important;
             -webkit-text-fill-color: #111827 !important;
-            caret-color: #111827 !important;
+            border: 1px solid #cbd5e1 !important;
         }
-        section[data-testid="stSidebar"] div[data-baseweb="input"] input::placeholder {
+        section[data-testid="stSidebar"] input::placeholder {
             color: #6b7280 !important;
             -webkit-text-fill-color: #6b7280 !important;
         }
-        section[data-testid="stSidebar"] div[data-baseweb="input"] svg {
-            fill: #111827 !important;
+        section[data-testid="stSidebar"] div[data-baseweb="input"] {
+            background: #ffffff !important;
+            border-radius: 10px !important;
+        }
+        section[data-testid="stSidebar"] div[data-baseweb="input"] * {
+            color: #111827 !important;
+        }
+        section[data-testid="stSidebar"] div[data-baseweb="base-input"] {
+            background: #ffffff !important;
         }
         </style>
         """,
