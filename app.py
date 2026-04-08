@@ -21,13 +21,13 @@ apply_style()
 
 BASE_DIR = Path(__file__).parent
 PAGE_FILES = [
-    ("pages/1_support_request.py", "支援需求發布", "📝"),
-    ("pages/2_departure_signout.py", "離組簽退", "🚶"),
-    ("pages/3_arrival_checkin.py", "到組報到", "✅"),
-    ("pages/4_supervisor_dashboard.py", "主管即時總表", "📊"),
-    ("pages/5_data_manage.py", "資料查詢與編輯", "🗂️"),
+    ("pages/1_支援需求發布.py", "支援需求發布", "📝"),
+    ("pages/2_離組簽退.py", "離組簽退", "🚶"),
+    ("pages/3_到組報到.py", "到組報到", "✅"),
+    ("pages/4_主管即時總表.py", "主管即時總表", "📊"),
+    ("pages/5_資料查詢與編輯.py", "資料查詢與編輯", "🗂️"),
 ]
-ADMIN_PAGE = ("pages/6_user_admin.py", "帳號與權限管理", "🔐")
+ADMIN_PAGE = ("pages/6_帳號與權限管理.py", "帳號與權限管理", "🔐")
 
 st.sidebar.title(SYSTEM_NAME)
 st.sidebar.caption("GF Logistics Support Portal")
