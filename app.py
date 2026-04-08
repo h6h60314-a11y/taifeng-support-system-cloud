@@ -99,19 +99,19 @@ def render_home():
     st.markdown('<div class="dispatch-board">', unsafe_allow_html=True)
     st.markdown('<div class="dispatch-board-header">• 支援調度系統</div>', unsafe_allow_html=True)
     st.markdown(
-        '''
-        <div class="dispatch-main-panel">
-            <div class="dispatch-main-icon">＋</div>
-            <div>
-                <div class="dispatch-main-title">發起人力調派</div>
-                <div class="dispatch-main-sub">START DISPATCH PROTOCOL</div>
-            </div>
+    '''
+    <div class="dispatch-main-panel">
+        <div class="dispatch-main-icon">＋</div>
+        <div>
+            <div class="dispatch-main-title">發起人力調派</div>
+            <div class="dispatch-main-sub">START DISPATCH PROTOCOL</div>
         </div>
-        ''',
-        unsafe_allow_html=True,
-    )
-    st.page_link("pages/1_support_request.py", label="前往支援需求發布", icon="📝")
-    st.markdown('</div>', unsafe_allow_html=True)
+    </div>
+    ''',
+    unsafe_allow_html=True,
+)
+st.caption("請由左側功能選單進入「支援需求發布」。")
+st.markdown('</div>', unsafe_allow_html=True)
 
     c1, c2, c3 = st.columns(3)
     with c1:
