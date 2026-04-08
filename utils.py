@@ -90,6 +90,26 @@ def apply_style() -> None:
         section[data-testid="stSidebar"] * {
             color: white !important;
         }
+
+        /* Sidebar 登入輸入框：白底黑字 */
+        section[data-testid="stSidebar"] div[data-baseweb="input"] {
+            background: #ffffff !important;
+            border-radius: 10px !important;
+            border: 1px solid #cbd5e1 !important;
+        }
+        section[data-testid="stSidebar"] div[data-baseweb="input"] input {
+            background: #ffffff !important;
+            color: #111827 !important;
+            -webkit-text-fill-color: #111827 !important;
+            caret-color: #111827 !important;
+        }
+        section[data-testid="stSidebar"] div[data-baseweb="input"] input::placeholder {
+            color: #6b7280 !important;
+            -webkit-text-fill-color: #6b7280 !important;
+        }
+        section[data-testid="stSidebar"] div[data-baseweb="input"] svg {
+            fill: #111827 !important;
+        }
         </style>
         """,
         unsafe_allow_html=True,
