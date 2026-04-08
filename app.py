@@ -198,7 +198,7 @@ pages = {
         st.Page("pages/1_支援需求發布.py", title="支援需求發布", icon="📝"),
         st.Page("pages/2_離組簽退.py", title="離組簽退", icon="🚶"),
         st.Page("pages/3_到組報到.py", title="到組報到", icon="✅"),
-        st.Page("pages/4_主管即時總.py", title="主管即時總表", icon="📊"),
+        st.Page("pages/4_主管即時總表.py", title="主管即時總表", icon="📊"),
         st.Page("pages/5_資料查詢與編輯.py", title="資料查詢與編輯", icon="🗂️"),
     ],
     "管理功能": [
