@@ -71,6 +71,7 @@ def render_home():
     )
 
     st.markdown('<div class="dispatch-subtitle">即時缺口提示</div>', unsafe_allow_html=True)
+
     if waiting_df.empty:
         st.success("目前沒有待支援缺口。")
     else:
@@ -81,10 +82,11 @@ def render_home():
             .head(2)
         )
         alert_cols = st.columns(len(alert_df) if len(alert_df) > 1 else 1)
+
         for i, (_, row) in enumerate(alert_df.iterrows()):
             with alert_cols[i]:
                 st.markdown(
-                    f'''
+                    f"""
                     <div class="dispatch-alert-card">
                         <div class="dispatch-alert-left">
                             <div class="dispatch-alert-num">+{int(row['required_count'])}</div>
@@ -92,28 +94,29 @@ def render_home():
                         </div>
                         <div class="dispatch-alert-action">立即派員</div>
                     </div>
-                    ''',
+                    """,
                     unsafe_allow_html=True,
                 )
 
     st.markdown('<div class="dispatch-board">', unsafe_allow_html=True)
     st.markdown('<div class="dispatch-board-header">• 支援調度系統</div>', unsafe_allow_html=True)
     st.markdown(
-    '''
-    <div class="dispatch-main-panel">
-        <div class="dispatch-main-icon">＋</div>
-        <div>
-            <div class="dispatch-main-title">發起人力調派</div>
-            <div class="dispatch-main-sub">START DISPATCH PROTOCOL</div>
+        """
+        <div class="dispatch-main-panel">
+            <div class="dispatch-main-icon">＋</div>
+            <div>
+                <div class="dispatch-main-title">發起人力調派</div>
+                <div class="dispatch-main-sub">START DISPATCH PROTOCOL</div>
+            </div>
         </div>
-    </div>
-    ''',
-    unsafe_allow_html=True,
-   )
-   st.caption("請由左側功能選單進入「支援需求發布」。")
-   st.markdown('</div>', unsafe_allow_html=True)
+        """,
+        unsafe_allow_html=True,
+    )
+    st.caption("請由左側功能選單進入「支援需求發布」。")
+    st.markdown("</div>", unsafe_allow_html=True)
 
     c1, c2, c3 = st.columns(3)
+
     with c1:
         st.markdown(
             f'<div class="status-head status-yellow">● 去程在途（{data["pending_arrival_count"]}）</div>',
@@ -155,6 +158,7 @@ def render_home():
     metric_cols[4].metric("異常提醒", len(abnormal_df))
 
     left, right = st.columns([1.2, 1])
+
     with left:
         st.subheader("今日待辦焦點")
         a, b = st.columns(2)
@@ -170,6 +174,7 @@ def render_home():
                 f"目前登入者：{user.get('display_name', '-')}\n角色：{user.get('role', '-')}\n所屬組別：{user.get('team', '-')}",
                 "使用者資訊",
             )
+
         st.subheader("今日支援需求")
         request_cols = ["request_no", "request_team", "publish_time", "required_count", "priority", "status"]
         safe_dataframe(data["requests_df"][request_cols] if not data["requests_df"].empty else data["requests_df"])
@@ -184,6 +189,7 @@ def render_home():
                     f'<div class="tf-danger"><b>{row["name"]}</b>｜{row["origin_team"]} → {row["target_team"]}<br>需求編號：{row["request_no"]}<br>已等待 {row["等待分鐘"]} 分鐘，尚未到組。</div>',
                     unsafe_allow_html=True,
                 )
+
         st.subheader("入口說明")
         st.markdown(
             "- 一般人員：可進行離組簽退、到組報到、查詢資料。\n"
