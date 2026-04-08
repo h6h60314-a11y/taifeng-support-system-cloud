@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from db import init_db, get_dashboard_data
 from auth import get_current_user, init_auth_table, is_logged_in, login, logout
 from config import SYSTEM_NAME
@@ -12,11 +14,20 @@ from utils import (
 )
 import streamlit as st
 
-
 set_page_config("企業入口首頁")
 init_db()
 init_auth_table()
 apply_style()
+
+BASE_DIR = Path(__file__).parent
+PAGE_FILES = [
+    ("pages/1_support_request.py", "支援需求發布", "📝"),
+    ("pages/2_departure_signout.py", "離組簽退", "🚶"),
+    ("pages/3_arrival_checkin.py", "到組報到", "✅"),
+    ("pages/4_supervisor_dashboard.py", "主管即時總表", "📊"),
+    ("pages/5_data_manage.py", "資料查詢與編輯", "🗂️"),
+]
+ADMIN_PAGE = ("pages/6_user_admin.py", "帳號與權限管理", "🔐")
 
 st.sidebar.title(SYSTEM_NAME)
 st.sidebar.caption("GF Logistics Support Portal")
@@ -53,28 +64,35 @@ if not is_logged_in():
 
     st.info("請先於左側輸入帳號密碼登入。登入後即可使用完整功能。")
     st.subheader("預設測試帳號")
-    st.code(
-        "admin / admin123\n"
-        "supervisor / supervisor123\n"
-        "staff01 / staff123"
-    )
+    st.code("admin / admin123\nsupervisor / supervisor123\nstaff01 / staff123")
     st.stop()
 
 user = get_current_user() or {}
-page_links = st.columns(5)
-with page_links[0]:
-    st.page_link("pages/1_支援需求發布.py", label="支援需求發布", icon="📝")
-with page_links[1]:
-    st.page_link("pages/2_離組簽退.py", label="離組簽退", icon="🚶")
-with page_links[2]:
-    st.page_link("pages/3_到組報到.py", label="到組報到", icon="✅")
-with page_links[3]:
-    st.page_link("pages/4_主管即時總表.py", label="主管即時總表", icon="📊")
-with page_links[4]:
-    st.page_link("pages/5_資料查詢與編輯.py", label="資料查詢與編輯", icon="🗂️")
+
+st.subheader("功能入口")
+missing_pages = []
+cols = st.columns(5)
+for i, (page_path, label, icon) in enumerate(PAGE_FILES):
+    file_path = BASE_DIR / page_path
+    with cols[i]:
+        if file_path.exists():
+            st.page_link(page_path, label=label, icon=icon)
+        else:
+            st.button(f"{icon} {label}", disabled=True, use_container_width=True)
+            missing_pages.append(page_path)
 
 if user.get("role") == "admin":
-    st.page_link("pages/6_帳號與權限管理.py", label="帳號與權限管理", icon="🔐")
+    admin_file = BASE_DIR / ADMIN_PAGE[0]
+    if admin_file.exists():
+        st.page_link(ADMIN_PAGE[0], label=ADMIN_PAGE[1], icon=ADMIN_PAGE[2])
+    else:
+        st.button(f"{ADMIN_PAGE[2]} {ADMIN_PAGE[1]}", disabled=True, use_container_width=True)
+        missing_pages.append(ADMIN_PAGE[0])
+
+if missing_pages:
+    st.warning("你的 GitHub 專案缺少部分 pages 分頁檔案，所以首頁不再直接報錯，而是先把缺少的功能停用顯示。")
+    st.code("\n".join(missing_pages))
+    st.info("請確認 pages 資料夾內有真正上傳對應的 .py 檔，而不是只有空資料夾。")
 
 data = get_dashboard_data()
 abnormal_df = abnormal_pending_df(data["pending_arrival_df"])
@@ -91,18 +109,9 @@ with left:
     st.subheader("今日待辦焦點")
     a, b = st.columns(2)
     with a:
-        portal_card(
-            "待支援組別",
-            "、".join(data["waiting_teams"]) if data["waiting_teams"] else "目前沒有待支援組別。",
-            "今日重點",
-        )
+        portal_card("待支援組別", "、".join(data["waiting_teams"]) if data["waiting_teams"] else "目前沒有待支援組別。", "今日重點")
     with b:
-        portal_card(
-            "登入角色",
-            f"目前登入者：{user.get('display_name', '-') }\n角色：{user.get('role', '-') }\n所屬組別：{user.get('team', '-') }",
-            "使用者資訊",
-        )
-
+        portal_card("登入角色", f"目前登入者：{user.get('display_name', '-')}\n角色：{user.get('role', '-')}\n所屬組別：{user.get('team', '-')}", "使用者資訊")
     st.subheader("今日支援需求")
     request_cols = ["request_no", "request_team", "publish_time", "required_count", "priority", "status"]
     safe_dataframe(data["requests_df"][request_cols] if not data["requests_df"].empty else data["requests_df"])
@@ -117,15 +126,8 @@ with right:
                 f'<div class="tf-danger"><b>{row["name"]}</b>｜{row["origin_team"]} → {row["target_team"]}<br>需求編號：{row["request_no"]}<br>已等待 {row["等待分鐘"]} 分鐘，尚未到組。</div>',
                 unsafe_allow_html=True,
             )
-
     st.subheader("入口說明")
-    st.markdown(
-        """
-        - 一般人員：可進行離組簽退、到組報到、查詢資料。
-        - 主管：可查看主管即時總表與整體狀況。
-        - 管理員：可維護帳號與權限。
-        """
-    )
+    st.markdown("- 一般人員：可進行離組簽退、到組報到、查詢資料。\n- 主管：可查看主管即時總表與整體狀況。\n- 管理員：可維護帳號與權限。")
 
 st.subheader("已離組未到組名單")
 pending_cols = ["name", "origin_team", "target_team", "depart_time", "request_no", "status"]
