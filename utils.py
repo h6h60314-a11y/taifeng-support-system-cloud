@@ -4,6 +4,7 @@ import pandas as pd
 import streamlit as st
 
 from config import ALERT_MINUTES, SYSTEM_NAME
+from db import now_tw
 
 
 def set_page_config(page_title: str) -> None:
@@ -102,7 +103,6 @@ def apply_style() -> None:
             color: white !important;
         }
 
-        /* Sidebar 登入輸入框：白底黑字 */
         section[data-testid="stSidebar"] div[data-baseweb="input"] {
             background: #ffffff !important;
             border-radius: 10px !important;
@@ -125,7 +125,6 @@ def apply_style() -> None:
             fill: #111827 !important;
         }
 
-        /* 首頁即時缺口提示 */
         .dispatch-subtitle {
             color: #94a3b8;
             font-size: 0.95rem;
@@ -180,7 +179,6 @@ def apply_style() -> None:
             font-size: 0.9rem;
         }
 
-        /* 主調度面板 */
         .dispatch-board {
             margin-top: 0.8rem;
             margin-bottom: 1rem;
@@ -239,7 +237,6 @@ def apply_style() -> None:
             font-weight: 700;
         }
 
-        /* 三區狀態看板 */
         .status-head {
             font-weight: 700;
             margin: 0.8rem 0;
@@ -305,7 +302,7 @@ def format_datetime_for_input(dt_str: str):
     try:
         return datetime.strptime(dt_str, "%Y-%m-%d %H:%M:%S")
     except Exception:
-        return datetime.now()
+        return now_tw().replace(tzinfo=None)
 
 
 def combine_date_time(date_value, time_value) -> str:
@@ -315,11 +312,13 @@ def combine_date_time(date_value, time_value) -> str:
 def abnormal_pending_df(df: pd.DataFrame) -> pd.DataFrame:
     if df.empty:
         return df
+
     result = df.copy()
     result["depart_time_dt"] = pd.to_datetime(result["depart_time"], errors="coerce")
     result["等待分鐘"] = (
         (pd.Timestamp.now() - result["depart_time_dt"]).dt.total_seconds() / 60
     ).fillna(0).astype(int)
+
     return result[result["等待分鐘"] > ALERT_MINUTES].sort_values("等待分鐘", ascending=False)
 
 
