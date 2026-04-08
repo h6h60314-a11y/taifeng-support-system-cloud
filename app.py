@@ -109,9 +109,9 @@ def render_home():
     </div>
     ''',
     unsafe_allow_html=True,
-)
-st.caption("請由左側功能選單進入「支援需求發布」。")
-st.markdown('</div>', unsafe_allow_html=True)
+   )
+   st.caption("請由左側功能選單進入「支援需求發布」。")
+   st.markdown('</div>', unsafe_allow_html=True)
 
     c1, c2, c3 = st.columns(3)
     with c1:
