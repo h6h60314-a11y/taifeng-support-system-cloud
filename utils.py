@@ -25,12 +25,10 @@ def apply_style() -> None:
                 radial-gradient(circle at top right, rgba(29,95,151,0.08), transparent 22%),
                 linear-gradient(180deg, #f5f6f8 0%, #eef3f8 100%);
         }
-
         .main .block-container {
             padding-top: 1.2rem;
             padding-bottom: 2rem;
         }
-
         .tf-title {
             padding: 1.5rem 1.5rem;
             border-radius: 20px;
@@ -40,7 +38,6 @@ def apply_style() -> None:
             box-shadow: 0 12px 26px rgba(16, 53, 87, 0.16);
             border: 1px solid rgba(255,255,255,0.08);
         }
-
         .tf-card {
             background: white;
             border: 1px solid #dbe5ef;
@@ -49,7 +46,6 @@ def apply_style() -> None:
             box-shadow: 0 4px 14px rgba(15, 53, 87, 0.06);
             height: 100%;
         }
-
         .tf-portal-card {
             background: rgba(255,255,255,0.98);
             border: 1px solid #dbe5ef;
@@ -58,7 +54,6 @@ def apply_style() -> None:
             box-shadow: 0 8px 22px rgba(15, 53, 87, 0.07);
             min-height: 150px;
         }
-
         .tf-alert {
             background: #fff4e5;
             border-left: 6px solid #f59e0b;
@@ -67,7 +62,6 @@ def apply_style() -> None:
             color: #7c4a03;
             margin-bottom: 0.8rem;
         }
-
         .tf-danger {
             background: #fff1f2;
             border-left: 6px solid #e11d48;
@@ -76,7 +70,6 @@ def apply_style() -> None:
             color: #881337;
             margin-bottom: 0.8rem;
         }
-
         .tf-badge {
             display: inline-block;
             padding: 0.3rem 0.65rem;
@@ -86,7 +79,6 @@ def apply_style() -> None:
             font-size: 0.82rem;
             font-weight: 600;
         }
-
         div[data-testid="stMetric"] {
             background: white;
             border: 1px solid #dbe5ef;
@@ -94,44 +86,36 @@ def apply_style() -> None:
             border-radius: 16px;
             box-shadow: 0 4px 14px rgba(15, 53, 87, 0.05);
         }
-
         section[data-testid="stSidebar"] {
             background: linear-gradient(180deg, #0c2f4c 0%, #163f64 100%);
         }
-
         section[data-testid="stSidebar"] * {
             color: white !important;
         }
-
         section[data-testid="stSidebar"] div[data-baseweb="input"] {
             background: #ffffff !important;
             border-radius: 10px !important;
             border: 1px solid #cbd5e1 !important;
         }
-
         section[data-testid="stSidebar"] div[data-baseweb="input"] input {
             background: #ffffff !important;
             color: #111827 !important;
             -webkit-text-fill-color: #111827 !important;
             caret-color: #111827 !important;
         }
-
         section[data-testid="stSidebar"] div[data-baseweb="input"] input::placeholder {
             color: #6b7280 !important;
             -webkit-text-fill-color: #6b7280 !important;
         }
-
         section[data-testid="stSidebar"] div[data-baseweb="input"] svg {
             fill: #111827 !important;
         }
-
         .dispatch-subtitle {
             color: #94a3b8;
             font-size: 0.95rem;
             margin: 0.25rem 0 0.8rem 0.3rem;
             font-weight: 600;
         }
-
         .dispatch-alert-card {
             display: flex;
             align-items: center;
@@ -144,13 +128,11 @@ def apply_style() -> None:
             box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
             margin-bottom: 1rem;
         }
-
         .dispatch-alert-left {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
-
         .dispatch-alert-num {
             width: 54px;
             height: 54px;
@@ -163,13 +145,11 @@ def apply_style() -> None:
             align-items: center;
             justify-content: center;
         }
-
         .dispatch-alert-team {
             color: #111827;
             font-size: 1.35rem;
             font-weight: 800;
         }
-
         .dispatch-alert-action {
             background: #ef4444;
             color: white;
@@ -178,7 +158,6 @@ def apply_style() -> None:
             font-weight: 700;
             font-size: 0.9rem;
         }
-
         .dispatch-board {
             margin-top: 0.8rem;
             margin-bottom: 1rem;
@@ -188,7 +167,6 @@ def apply_style() -> None:
             border: 1px solid #e5e7eb;
             box-shadow: 0 10px 22px rgba(15, 23, 42, 0.05);
         }
-
         .dispatch-board-header {
             background: #1f2d44;
             color: white;
@@ -196,7 +174,6 @@ def apply_style() -> None:
             font-weight: 700;
             letter-spacing: 0.02em;
         }
-
         .dispatch-main-panel {
             margin: 1rem;
             min-height: 250px;
@@ -208,7 +185,6 @@ def apply_style() -> None:
             justify-content: center;
             gap: 1.1rem;
         }
-
         .dispatch-main-icon {
             width: 72px;
             height: 72px;
@@ -222,39 +198,32 @@ def apply_style() -> None:
             line-height: 1;
             font-weight: 700;
         }
-
         .dispatch-main-title {
             font-size: 2.2rem;
             font-weight: 900;
             color: #1f2d44;
             letter-spacing: 0.02em;
         }
-
         .dispatch-main-sub {
             color: #cbd5e1;
             font-size: 1rem;
             letter-spacing: 0.08em;
             font-weight: 700;
         }
-
         .status-head {
             font-weight: 700;
             margin: 0.8rem 0;
             font-size: 0.98rem;
         }
-
         .status-yellow {
             color: #ca8a04;
         }
-
         .status-green {
             color: #16a34a;
         }
-
         .status-blue {
             color: #60a5fa;
         }
-
         .status-box {
             background: #ffffff;
             border: 1px solid #edf2f7;
@@ -315,9 +284,7 @@ def abnormal_pending_df(df: pd.DataFrame) -> pd.DataFrame:
 
     result = df.copy()
     result["depart_time_dt"] = pd.to_datetime(result["depart_time"], errors="coerce")
-    result["等待分鐘"] = (
-        (pd.Timestamp.now() - result["depart_time_dt"]).dt.total_seconds() / 60
-    ).fillna(0).astype(int)
+    result["等待分鐘"] = ((pd.Timestamp.now() - result["depart_time_dt"]).dt.total_seconds() / 60).fillna(0).astype(int)
 
     return result[result["等待分鐘"] > ALERT_MINUTES].sort_values("等待分鐘", ascending=False)
 
@@ -333,6 +300,6 @@ def sidebar_user_panel(user: dict | None) -> None:
     if not user:
         return
     st.sidebar.markdown("---")
-    st.sidebar.markdown(f"**登入者：** {user.get('display_name', '-')}")
-    st.sidebar.markdown(f"**角色：** {user.get('role', '-')}")
-    st.sidebar.markdown(f"**所屬組別：** {user.get('team', '-')}")
+    st.sidebar.markdown(f"**登入者：** {user.get('display_name', '-')}" )
+    st.sidebar.markdown(f"**角色：** {user.get('role', '-')}" )
+    st.sidebar.markdown(f"**所屬組別：** {user.get('team', '-')}" )
