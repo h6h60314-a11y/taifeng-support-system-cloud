@@ -103,35 +103,38 @@ def apply_style() -> None:
             color: white !important;
         }
 
+        /* Sidebar 最上方品牌區 */
         .sidebar-brand-fixed {
             position: fixed;
             top: 0.75rem;
             left: 0.8rem;
             width: 235px;
             z-index: 9999;
-            background: linear-gradient(180deg, #0c2f4c 0%, #163f64 100%);
-            padding: 0.9rem 0.8rem 0.7rem 0.8rem;
-            border-radius: 14px;
+            background: linear-gradient(180deg, #103555 0%, #163f64 100%);
+            padding: 0.9rem 0.8rem 0.8rem 0.8rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.15);
         }
 
         .sidebar-brand-title {
             color: white;
             font-size: 1.9rem;
             font-weight: 900;
-            line-height: 1.2;
+            line-height: 1.15;
             margin-bottom: 0.35rem;
         }
 
         .sidebar-brand-sub {
-            color: #cbd5e1;
+            color: #dbeafe;
             font-size: 0.9rem;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         section[data-testid="stSidebar"] div[data-testid="stSidebarNav"] {
-            margin-top: 95px;
+            margin-top: 110px;
         }
 
+        /* Sidebar 登入框：白底黑字 */
         section[data-testid="stSidebar"] div[data-baseweb="input"] {
             background: #ffffff !important;
             border-radius: 10px !important;
@@ -154,6 +157,34 @@ def apply_style() -> None:
             fill: #111827 !important;
         }
 
+        /* 下方登入資訊縮小 */
+        .sidebar-user-info {
+            font-size: 0.88rem;
+            line-height: 1.6;
+            color: #dbeafe;
+            margin-top: 0.35rem;
+        }
+
+        .sidebar-user-info strong {
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        /* Sidebar 按鈕（包含登出）改成藍底 */
+        section[data-testid="stSidebar"] button[kind="secondary"] {
+            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+        }
+
+        section[data-testid="stSidebar"] button[kind="secondary"]:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+            color: white !important;
+        }
+
+        /* 首頁即時缺口提示 */
         .dispatch-subtitle {
             color: #94a3b8;
             font-size: 0.95rem;
@@ -208,6 +239,7 @@ def apply_style() -> None:
             font-size: 0.9rem;
         }
 
+        /* 主調度面板 */
         .dispatch-board {
             margin-top: 0.8rem;
             margin-bottom: 1rem;
@@ -266,6 +298,7 @@ def apply_style() -> None:
             font-weight: 700;
         }
 
+        /* 三區狀態看板 */
         .status-head {
             font-weight: 700;
             margin: 0.8rem 0;
@@ -344,7 +377,9 @@ def abnormal_pending_df(df: pd.DataFrame) -> pd.DataFrame:
 
     result = df.copy()
     result["depart_time_dt"] = pd.to_datetime(result["depart_time"], errors="coerce")
-    result["等待分鐘"] = ((pd.Timestamp.now() - result["depart_time_dt"]).dt.total_seconds() / 60).fillna(0).astype(int)
+    result["等待分鐘"] = (
+        (pd.Timestamp.now() - result["depart_time_dt"]).dt.total_seconds() / 60
+    ).fillna(0).astype(int)
 
     return result[result["等待分鐘"] > ALERT_MINUTES].sort_values("等待分鐘", ascending=False)
 
@@ -359,7 +394,15 @@ def safe_dataframe(df: pd.DataFrame, use_container_width: bool = True) -> None:
 def sidebar_user_panel(user: dict | None) -> None:
     if not user:
         return
+
     st.sidebar.markdown("---")
-    st.sidebar.markdown(f"**登入者：** {user.get('display_name', '-')}")
-    st.sidebar.markdown(f"**角色：** {user.get('role', '-')}")
-    st.sidebar.markdown(f"**所屬組別：** {user.get('team', '-')}")
+    st.sidebar.markdown(
+        f"""
+        <div class="sidebar-user-info">
+            <div><strong>登入者：</strong> {user.get('display_name', '-')}</div>
+            <div><strong>角色：</strong> {user.get('role', '-')}</div>
+            <div><strong>所屬組別：</strong> {user.get('team', '-')}</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
