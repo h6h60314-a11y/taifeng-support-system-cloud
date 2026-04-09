@@ -69,6 +69,14 @@ def render_home():
         if not data["requests_df"].empty
         else data["requests_df"]
     )
+    supporting_df = (
+        data["requests_df"][data["requests_df"]["status"] == "支援中"]
+        if not data["requests_df"].empty
+        else data["requests_df"]
+    )
+
+    waiting_count = len(waiting_df) if not waiting_df.empty else 0
+    supporting_count = len(supporting_df) if not supporting_df.empty else 0
 
     st.markdown('<div class="dispatch-subtitle">即時缺口提示</div>', unsafe_allow_html=True)
 
@@ -150,12 +158,11 @@ def render_home():
             show = abnormal_df[["name", "target_team", "等待分鐘"]].head(5)
             st.dataframe(show, use_container_width=True, hide_index=True)
 
-    metric_cols = st.columns(5)
-    metric_cols[0].metric("今日支援需求總數", data["today_requests"])
-    metric_cols[1].metric("待支援組別", len(data["waiting_teams"]))
+    metric_cols = st.columns(4)
+    metric_cols[0].metric("待支援需求", waiting_count)
+    metric_cols[1].metric("支援中需求", supporting_count)
     metric_cols[2].metric("已離組未到組", data["pending_arrival_count"])
     metric_cols[3].metric("已到組人數", data["arrived_count"])
-    metric_cols[4].metric("異常提醒", len(abnormal_df))
 
     left, right = st.columns([1.2, 1])
 
