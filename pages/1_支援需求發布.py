@@ -1,5 +1,3 @@
-from datetime import datetime
-
 import streamlit as st
 
 from auth import get_current_user, require_login
@@ -86,8 +84,4 @@ if not filtered_df.empty:
         )
         filtered_df = filtered_df[mask]
 
-safe_dataframe(
-    filtered_df[["request_no", "request_team", "publish_time", "required_count", "reason", "priority", "note", "status"]]
-    if not filtered_df.empty
-    else filtered_df
-)
+safe_dataframe(filtered_df[["request_no", "request_team", "publish_time", "required_count", "reason", "priority", "note", "status"]] if not filtered_df.empty else filtered_df)
