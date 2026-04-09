@@ -46,15 +46,7 @@ with st.form("arrival_form", clear_on_submit=True):
                     st.warning("提醒：抵達組別與需求組別不同，請再次確認。")
 
                 arrival_time = combine_date_time(arrival_date, arrival_time_input)
-
-                insert_arrival(
-                    name.strip(),
-                    origin_team,
-                    arrival_team,
-                    arrival_time,
-                    request_no,
-                    ARRIVAL_STATUS,
-                )
+                insert_arrival(name.strip(), origin_team, arrival_team, arrival_time, request_no, ARRIVAL_STATUS)
                 st.success(f"{name.strip()} 已完成到組報到。")
         except Exception as exc:
             st.error(f"到組報到失敗：{exc}")
@@ -81,8 +73,4 @@ if not filtered_df.empty:
         )
         filtered_df = filtered_df[mask]
 
-safe_dataframe(
-    filtered_df[["name", "origin_team", "arrival_team", "arrival_time", "request_no", "status"]]
-    if not filtered_df.empty
-    else filtered_df
-)
+safe_dataframe(filtered_df[["name", "origin_team", "arrival_team", "arrival_time", "request_no", "status"]] if not filtered_df.empty else filtered_df)
