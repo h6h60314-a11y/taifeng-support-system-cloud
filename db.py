@@ -131,16 +131,7 @@ def generate_request_no() -> str:
     return f"{prefix}{count + 1:03d}"
 
 
-def insert_support_request(
-    request_no: str,
-    request_team: str,
-    publish_time: str,
-    required_count: int,
-    reason: str,
-    priority: str,
-    note: str,
-    status: str,
-) -> None:
+def insert_support_request(request_no: str, request_team: str, publish_time: str, required_count: int, reason: str, priority: str, note: str, status: str) -> None:
     ts = now_str()
     with get_conn() as conn:
         conn.execute(
@@ -166,14 +157,7 @@ def insert_support_request(
         )
 
 
-def insert_departure(
-    name: str,
-    origin_team: str,
-    target_team: str,
-    depart_time: str,
-    request_no: str,
-    status: str,
-) -> None:
+def insert_departure(name: str, origin_team: str, target_team: str, depart_time: str, request_no: str, status: str) -> None:
     ts = now_str()
     with get_conn() as conn:
         conn.execute(
@@ -195,24 +179,13 @@ def insert_departure(
                 "updated_at": ts,
             },
         )
-
         conn.execute(
-            text(
-                "UPDATE support_requests SET status = '支援中', updated_at = :updated_at "
-                "WHERE request_no = :request_no AND status = '待支援'"
-            ),
+            text("UPDATE support_requests SET status = '支援中', updated_at = :updated_at WHERE request_no = :request_no AND status = '待支援'"),
             {"updated_at": ts, "request_no": request_no},
         )
 
 
-def insert_arrival(
-    name: str,
-    origin_team: str,
-    arrival_team: str,
-    arrival_time: str,
-    request_no: str,
-    status: str,
-) -> None:
+def insert_arrival(name: str, origin_team: str, arrival_team: str, arrival_time: str, request_no: str, status: str) -> None:
     ts = now_str()
     with get_conn() as conn:
         conn.execute(
@@ -256,12 +229,8 @@ def auto_update_request_status(request_no: str, conn=None) -> None:
         ).scalar_one()
 
         new_status = "已補足" if arrived_count >= req[0] else "支援中"
-
         conn.execute(
-            text(
-                "UPDATE support_requests SET status = :status, updated_at = :updated_at "
-                "WHERE request_no = :request_no"
-            ),
+            text("UPDATE support_requests SET status = :status, updated_at = :updated_at WHERE request_no = :request_no"),
             {
                 "status": new_status,
                 "updated_at": now_str(),
@@ -363,20 +332,14 @@ def get_request_options(active_only: bool = False) -> list[str]:
 
 
 def get_request_by_no(request_no: str) -> Optional[dict[str, Any]]:
-    df = fetch_df(
-        "SELECT * FROM support_requests WHERE request_no = :request_no",
-        {"request_no": request_no},
-    )
+    df = fetch_df("SELECT * FROM support_requests WHERE request_no = :request_no", {"request_no": request_no})
     return None if df.empty else df.iloc[0].to_dict()
 
 
 def update_request_status(request_no: str, status: str) -> None:
     with get_conn() as conn:
         conn.execute(
-            text(
-                "UPDATE support_requests SET status = :status, updated_at = :updated_at "
-                "WHERE request_no = :request_no"
-            ),
+            text("UPDATE support_requests SET status = :status, updated_at = :updated_at WHERE request_no = :request_no"),
             {
                 "status": status,
                 "updated_at": now_str(),
@@ -397,12 +360,8 @@ def update_table_by_id(table_name: str, row_id: int, field_values: dict[str, Any
 
     with get_conn() as conn:
         conn.execute(text(f"UPDATE {table_name} SET {set_clause} WHERE id = :row_id"), clean_data)
-
         if table_name in {"arrivals", "support_requests"}:
-            row = conn.execute(
-                text(f"SELECT request_no FROM {table_name} WHERE id = :row_id"),
-                {"row_id": row_id},
-            ).fetchone()
+            row = conn.execute(text(f"SELECT request_no FROM {table_name} WHERE id = :row_id"), {"row_id": row_id}).fetchone()
             if row and row[0]:
                 auto_update_request_status(row[0], conn)
 
@@ -414,18 +373,9 @@ def delete_table_by_id(table_name: str, row_id: int) -> None:
 
     request_no = None
     with get_conn() as conn:
-        row = conn.execute(
-            text(f"SELECT request_no FROM {table_name} WHERE id = :row_id"),
-            {"row_id": row_id},
-        ).fetchone()
-
+        row = conn.execute(text(f"SELECT request_no FROM {table_name} WHERE id = :row_id"), {"row_id": row_id}).fetchone()
         if row:
             request_no = row[0]
-
-        conn.execute(
-            text(f"DELETE FROM {table_name} WHERE id = :row_id"),
-            {"row_id": row_id},
-        )
-
+        conn.execute(text(f"DELETE FROM {table_name} WHERE id = :row_id"), {"row_id": row_id})
         if request_no:
             auto_update_request_status(request_no, conn)
