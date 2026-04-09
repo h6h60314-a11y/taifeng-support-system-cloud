@@ -24,8 +24,15 @@ BASE_DIR = Path(__file__).parent
 
 
 def render_home():
-    st.sidebar.title(SYSTEM_NAME)
-    st.sidebar.caption("GF Logistics Support Portal")
+    st.sidebar.markdown(
+        f"""
+        <div class="sidebar-brand-fixed">
+            <div class="sidebar-brand-title">{SYSTEM_NAME}</div>
+            <div class="sidebar-brand-sub">GF Logistics Support Portal</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     user = get_current_user()
     if is_logged_in() and user:
@@ -56,6 +63,7 @@ def render_home():
             portal_card("離組簽退 / 到組報到", "人員移動可即時登錄，主管能立即掌握支援流向。", "人員流向")
         with c3:
             portal_card("主管即時總表", "集中查看待支援、支援中、異常提醒與整體統計。", "主管監控")
+
         st.info("請先於左側輸入帳號密碼登入。登入後即可使用完整功能。")
         st.subheader("預設測試帳號")
         st.code("admin / admin123\nsupervisor / supervisor123\nstaff01 / staff123")
@@ -64,11 +72,13 @@ def render_home():
     user = get_current_user() or {}
     data = get_dashboard_data()
     abnormal_df = abnormal_pending_df(data["pending_arrival_df"])
+
     waiting_df = (
         data["requests_df"][data["requests_df"]["status"] == "待支援"]
         if not data["requests_df"].empty
         else data["requests_df"]
     )
+
     supporting_df = (
         data["requests_df"][data["requests_df"]["status"] == "支援中"]
         if not data["requests_df"].empty
@@ -169,12 +179,14 @@ def render_home():
     with left:
         st.subheader("今日待辦焦點")
         a, b = st.columns(2)
+
         with a:
             portal_card(
                 "待支援組別",
                 "、".join(data["waiting_teams"]) if data["waiting_teams"] else "目前沒有待支援組別。",
                 "今日重點",
             )
+
         with b:
             portal_card(
                 "登入角色",
