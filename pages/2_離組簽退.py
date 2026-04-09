@@ -46,15 +46,7 @@ with st.form("departure_form", clear_on_submit=True):
                     st.warning("提醒：前往支援組別與需求組別不同，請再次確認。")
 
                 depart_time = combine_date_time(depart_date, depart_time_input)
-
-                insert_departure(
-                    name.strip(),
-                    origin_team,
-                    target_team,
-                    depart_time,
-                    request_no,
-                    DEPARTURE_STATUS,
-                )
+                insert_departure(name.strip(), origin_team, target_team, depart_time, request_no, DEPARTURE_STATUS)
                 st.success(f"{name.strip()} 已完成離組簽退。")
         except Exception as exc:
             st.error(f"離組簽退失敗：{exc}")
@@ -81,8 +73,4 @@ if not filtered_df.empty:
         )
         filtered_df = filtered_df[mask]
 
-safe_dataframe(
-    filtered_df[["name", "origin_team", "target_team", "depart_time", "request_no", "status"]]
-    if not filtered_df.empty
-    else filtered_df
-)
+safe_dataframe(filtered_df[["name", "origin_team", "target_team", "depart_time", "request_no", "status"]] if not filtered_df.empty else filtered_df)
